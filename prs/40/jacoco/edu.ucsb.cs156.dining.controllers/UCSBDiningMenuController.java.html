@@ -33,7 +33,6 @@ import jakarta.validation.Valid;
 <span class="fc" id="L33">@Slf4j</span>
 <span class="fc" id="L34">public class UCSBDiningMenuController extends ApiController {</span>
 
-  @Autowired UserRepository userRepository;
   @Autowired UCSBDiningMenuService ucsbDiningMenuService;
 
   @Operation(summary = &quot;Get list of meals serving in given dining common on given date&quot;)
@@ -46,9 +45,9 @@ import jakarta.validation.Valid;
   )
     throws Exception {
 
-<span class="fc" id="L49">    String body = ucsbDiningMenuService.getJSON(datetime, diningcommoncode);</span>
+<span class="fc" id="L48">    String body = ucsbDiningMenuService.getJSON(datetime, diningcommoncode);</span>
 
-<span class="fc" id="L51">    return ResponseEntity.ok().body(body);</span>
+<span class="fc" id="L50">    return ResponseEntity.ok().body(body);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
