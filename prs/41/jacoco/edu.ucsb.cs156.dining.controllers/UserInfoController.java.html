@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UserInfoController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">proj-dining</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs156.dining.controllers</a> &gt; <span class="el_source">UserInfoController.java</span></div><h1>UserInfoController.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs156.dining.controllers;
+
+import edu.ucsb.cs156.dining.models.CurrentUser;
+import edu.ucsb.cs156.dining.entities.User;
+import edu.ucsb.cs156.dining.repositories.UserRepository;
+import edu.ucsb.cs156.dining.errors.EntityNotFoundException;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+/**
+ * This is a REST controller for getting information about the current user and modifying user details.
+ */
+
+@Tag(name=&quot;Current User Information&quot;)
+@RequestMapping(&quot;/api/currentUser&quot;)
+@RestController
+<span class="fc" id="L24">public class UserInfoController extends ApiController {</span>
+
+    @Autowired
+    private UserRepository userRepository;
+
+    /**
+     * This method returns the current user.
+     * @return the current user
+     */
+    @Operation(summary= &quot;Get information about current user&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;&quot;)
+    public CurrentUser getCurrentUser() {
+<span class="fc" id="L37">        return super.getCurrentUser();</span>
+    }
+
+    /**
+     * This method allows the user to update their alias.
+     * @param alias the new alias
+     * @return the updated user
+     */
+    @Operation(summary = &quot;Update alias of the current user&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @PostMapping(&quot;/updateAlias&quot;)
+    public User updateAlias(@RequestParam String alias) {
+<span class="fc" id="L49">        CurrentUser currentUser = super.getCurrentUser();</span>
+<span class="fc" id="L50">        User user = currentUser.getUser();</span>
+        
+<span class="fc" id="L52">        user.setAlias(alias);  </span>
+<span class="fc" id="L53">        userRepository.save(user);  </span>
+        
+<span class="fc" id="L55">        return user;</span>
+    }
+
+    /**
+     * This method allows an admin to update the moderation status of a user.
+     * @param id the id of the user to update
+     * @param moderation the new moderation status
+     * @return the updated user
+     */
+    @Operation(summary = &quot;Update moderation status of a user (admin only)&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;/updateAliasModeration&quot;)
+    public User updateAliasModeration(
+            @RequestParam long id, 
+            @RequestParam boolean moderation) {
+        
+<span class="fc" id="L71">        User user = userRepository.findById(id)</span>
+<span class="fc" id="L72">            .orElseThrow(() -&gt; new EntityNotFoundException(User.class, id));</span>
+        
+<span class="fc" id="L74">        user.setModeration(moderation);  </span>
+<span class="fc" id="L75">        userRepository.save(user);  </span>
+        
+<span class="fc" id="L77">        return user;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
