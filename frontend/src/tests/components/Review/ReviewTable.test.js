@@ -25,12 +25,9 @@ describe("ReviewTable tests", () => {
     render(
       <QueryClientProvider client={queryClient}>
         <MemoryRouter>
-          <ReviewTable
-            reviews={ReviewFixtures.threeReviews}
-            currentUser={currentUser}
-          />
+          <ReviewTable reviews={ReviewFixtures.threeReviews} currentUser={currentUser} />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     const expectedHeaders = [
@@ -67,31 +64,24 @@ describe("ReviewTable tests", () => {
       expect(cell).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2",
-    );
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
 
-    // Check that Approve, Reject, and Delete buttons are not present
-    const approveButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Approve-button`,
-    );
+    // Check that Edit, Approve, Reject, and Delete buttons are not present
+    const editButton = screen.queryByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).not.toBeInTheDocument();
+
+    const approveButton = screen.queryByTestId(`${testId}-cell-row-0-col-Approve-button`);
     expect(approveButton).not.toBeInTheDocument();
 
-    const rejectButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Reject-button`,
-    );
+    const rejectButton = screen.queryByTestId(`${testId}-cell-row-0-col-Reject-button`);
     expect(rejectButton).not.toBeInTheDocument();
 
-    const deleteButton = screen.queryByTestId(
-      `${testId}-cell-row-0-col-Delete-button`,
-    );
+    const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).not.toBeInTheDocument();
   });
 
-  test("Has the expected column headers and content with moderator options and delete column", () => {
+  test("Has the expected column headers and content with admin user", () => {
     const currentUser = currentUserFixtures.adminUser;
 
     render(
@@ -104,7 +94,7 @@ describe("ReviewTable tests", () => {
             deleteColumn={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     const expectedHeaders = [
@@ -117,6 +107,7 @@ describe("ReviewTable tests", () => {
       "Moderator Comments",
       "Date Created",
       "Date Edited",
+      "Edit",
       "Approve",
       "Reject",
       "Delete",
@@ -144,31 +135,46 @@ describe("ReviewTable tests", () => {
       expect(cell).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
-      "1",
-    );
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
-      "2",
-    );
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
 
-    // Check that Approve, Reject, and Delete buttons are present
-    const approveButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Approve-button`,
-    );
+    // Check that Edit, Approve, Reject, and Delete buttons are present
+    const editButton = screen.getByTestId(`${testId}-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+    expect(editButton).toHaveClass("btn-primary");
+
+    const approveButton = screen.getByTestId(`${testId}-cell-row-0-col-Approve-button`);
     expect(approveButton).toBeInTheDocument();
     expect(approveButton).toHaveClass("btn-success");
 
-    const rejectButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Reject-button`,
-    );
+    const rejectButton = screen.getByTestId(`${testId}-cell-row-0-col-Reject-button`);
     expect(rejectButton).toBeInTheDocument();
     expect(rejectButton).toHaveClass("btn-warning");
 
-    const deleteButton = screen.getByTestId(
-      `${testId}-cell-row-0-col-Delete-button`,
-    );
+    const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
+  });
+
+  test("Edit button navigates to the edit page", async () => {
+    const currentUser = currentUserFixtures.adminUser;
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ReviewTable reviews={ReviewFixtures.threeReviews} currentUser={currentUser} />
+        </MemoryRouter>
+      </QueryClientProvider>
+    );
+
+    const editButton = await screen.findByTestId(`ReviewTable-cell-row-0-col-Edit-button`);
+    expect(editButton).toBeInTheDocument();
+
+    fireEvent.click(editButton);
+
+    await waitFor(() =>
+      expect(mockedNavigate).toHaveBeenCalledWith("/review/edit/1")
+    );
   });
 
   test("Approve button calls approve callback", async () => {
@@ -188,7 +194,7 @@ describe("ReviewTable tests", () => {
             moderatorOptions={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     await waitFor(() => {
@@ -225,7 +231,7 @@ describe("ReviewTable tests", () => {
             moderatorOptions={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     await waitFor(() => {
@@ -262,7 +268,7 @@ describe("ReviewTable tests", () => {
             deleteColumn={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>,
+      </QueryClientProvider>
     );
 
     await waitFor(() => {

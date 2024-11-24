@@ -1,4 +1,3 @@
-// frontend/src/main/components/Review/ReviewForm.test.js
 
 import { render, waitFor, fireEvent, screen } from "@testing-library/react";
 import ReviewForm from "main/components/Review/ReviewForm";
@@ -17,23 +16,22 @@ describe("ReviewForm tests", () => {
     render(
       <Router>
         <ReviewForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByText(/Student ID/);
-    await screen.findByText(/Create/);
+    expect(await screen.findByText(/Student ID/)).toBeInTheDocument();
+    expect(screen.getByText(/Create/)).toBeInTheDocument();
   });
 
   test("renders correctly when passing in a Review", async () => {
     render(
       <Router>
         <ReviewForm initialContents={ReviewFixtures.oneReview} />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("ReviewForm-id");
+    expect(await screen.findByTestId("ReviewForm-id")).toHaveValue("1");
     expect(screen.getByText(/Id/)).toBeInTheDocument();
-    expect(screen.getByTestId("ReviewForm-id")).toHaveValue("1");
     expect(screen.getByTestId("ReviewForm-status")).toHaveValue(
-      "Awaiting Moderation",
+      "Awaiting Moderation"
     );
   });
 
@@ -41,9 +39,11 @@ describe("ReviewForm tests", () => {
     render(
       <Router>
         <ReviewForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("ReviewForm-studentId");
+
+    // Wait for form to render
+    await waitFor(() => expect(screen.getByTestId("ReviewForm-studentId")).toBeInTheDocument());
 
     const studentIdField = screen.getByTestId("ReviewForm-studentId");
     const itemIdField = screen.getByTestId("ReviewForm-itemId");
@@ -52,6 +52,7 @@ describe("ReviewForm tests", () => {
     const commentsField = screen.getByTestId("ReviewForm-comments");
     const submitButton = screen.getByTestId("ReviewForm-submit");
 
+    // Provide invalid inputs
     fireEvent.change(studentIdField, { target: { value: "bad-input" } });
     fireEvent.change(itemIdField, { target: { value: "bad-input" } });
     fireEvent.change(dateItemServedField, { target: { value: "bad-input" } });
@@ -59,28 +60,25 @@ describe("ReviewForm tests", () => {
     fireEvent.change(commentsField, { target: { value: "" } }); // Missing comments
     fireEvent.click(submitButton);
 
-    await screen.findByText(/Student ID must be a positive integer/);
-    expect(
-      screen.getByText(/Item ID must be a positive integer/),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Date Item Served is required/),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByText(/Stars must be between 1 and 5/),
-    ).toBeInTheDocument();
+    // Check for error messages
+    expect(await screen.findByText(/Student ID must be a positive integer/)).toBeInTheDocument();
+    expect(screen.getByText(/Item ID must be a positive integer/)).toBeInTheDocument();
+    expect(screen.getByText(/Date Item Served is required/)).toBeInTheDocument();
+    expect(screen.getByText(/Stars must be between 1 and 5/)).toBeInTheDocument();
     expect(screen.getByText(/Comments are required/)).toBeInTheDocument();
   });
 
-  test("No error messages on good input", async () => {
+  test("Validation succeeds and submitAction is called on good input", async () => {
     const mockSubmitAction = jest.fn();
 
     render(
       <Router>
         <ReviewForm submitAction={mockSubmitAction} />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("ReviewForm-studentId");
+
+    // Wait for form to render
+    await waitFor(() => expect(screen.getByTestId("ReviewForm-studentId")).toBeInTheDocument());
 
     const studentIdField = screen.getByTestId("ReviewForm-studentId");
     const itemIdField = screen.getByTestId("ReviewForm-itemId");
@@ -89,41 +87,43 @@ describe("ReviewForm tests", () => {
     const commentsField = screen.getByTestId("ReviewForm-comments");
     const submitButton = screen.getByTestId("ReviewForm-submit");
 
+    // Provide valid inputs
     fireEvent.change(studentIdField, { target: { value: "1" } });
     fireEvent.change(itemIdField, { target: { value: "7" } });
-    fireEvent.change(dateItemServedField, {
-      target: { value: "2022-01-02T12:00" },
-    });
+    fireEvent.change(dateItemServedField, { target: { value: "2022-01-02T12:00" } });
     fireEvent.change(starsField, { target: { value: "5" } });
     fireEvent.change(commentsField, { target: { value: "Great food!" } });
+
+    // Ensure no validation errors are shown
+    expect(screen.queryByText(/Student ID is required/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Item ID is required/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Date Item Served is required/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Stars must be between 1 and 5/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Comments are required/)).not.toBeInTheDocument();
+
     fireEvent.click(submitButton);
 
+    // Wait for submitAction to be called
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(
-      screen.queryByText(/Student ID is required/),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByText(/Item ID is required/)).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Date Item Served is required/),
-    ).not.toBeInTheDocument();
-    expect(
-      screen.queryByText(/Stars must be between 1 and 5/),
-    ).not.toBeInTheDocument();
-    expect(screen.queryByText(/Comments are required/)).not.toBeInTheDocument();
+    // Verify that submitAction was called with the correct data
+    expect(mockSubmitAction).toHaveBeenCalledWith({
+      studentId: "1",
+      itemId: "7",
+      dateItemServed: "2022-01-02T12:00",
+      stars: 5,
+      comments: "Great food!",
+    });
   });
 
   test("navigate(-1) is called when Cancel is clicked", async () => {
     render(
       <Router>
         <ReviewForm />
-      </Router>,
+      </Router>
     );
-    await screen.findByTestId("ReviewForm-cancel");
-    const cancelButton = screen.getByTestId("ReviewForm-cancel");
-
+    const cancelButton = await screen.findByTestId("ReviewForm-cancel");
     fireEvent.click(cancelButton);
-
     await waitFor(() => expect(mockedNavigate).toHaveBeenCalledWith(-1));
   });
 });

@@ -1,3 +1,5 @@
+// frontend/src/main/components/Review/ReviewTable.js
+
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
@@ -13,34 +15,32 @@ import { useNavigate } from "react-router-dom";
 
 export default function ReviewTable({
   reviews,
-  currentUser,
+  // Removed currentUser as it's not used
   moderatorOptions = false,
   deleteColumn = false,
 }) {
   const navigate = useNavigate();
 
-  const editCallback = (cell) => {
-    navigate(`/review/edit/${cell.row.values.id}`);
-  };
+  // Removed editCallback as it's not used
 
   // Stryker disable all: hard to test for query caching
 
   const deleteMutation = useBackendMutation(
     cellToAxiosParamsDelete,
     { onSuccess: onDeleteSuccess },
-    ["/api/review/all"],
+    ["/api/review/all"]
   );
 
   const approveMutation = useBackendMutation(
     cellToAxiosParamsApprove,
     { onSuccess: onApproveSuccess },
-    ["/api/review/all"],
+    ["/api/review/all"]
   );
 
   const rejectMutation = useBackendMutation(
     cellToAxiosParamsReject,
     { onSuccess: onRejectSuccess },
-    ["/api/review/all"],
+    ["/api/review/all"]
   );
 
   // Stryker restore all
@@ -98,16 +98,16 @@ export default function ReviewTable({
 
   if (moderatorOptions) {
     columns.push(
-      ButtonColumn("Approve", "success", approveCallback, "ReviewTable"),
+      ButtonColumn("Approve", "success", approveCallback, "ReviewTable")
     );
     columns.push(
-      ButtonColumn("Reject", "warning", rejectCallback, "ReviewTable"),
+      ButtonColumn("Reject", "warning", rejectCallback, "ReviewTable")
     );
   }
 
   if (deleteColumn) {
     columns.push(
-      ButtonColumn("Delete", "danger", deleteCallback, "ReviewTable"),
+      ButtonColumn("Delete", "danger", deleteCallback, "ReviewTable")
     );
   }
 
