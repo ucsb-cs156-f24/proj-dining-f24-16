@@ -58,6 +58,15 @@ export default function AppNavbar({
                   <NavDropdown.Item href="/admin/users">Users</NavDropdown.Item>
                 </NavDropdown>
               )}
+              {currentUser && currentUser.loggedIn ? (
+                <>
+                  <Nav.Link as={Link} to="/myreviews">
+                    My Reviews
+                  </Nav.Link>
+                </>
+              ) : (
+                <></>
+              )}
             </Nav>
 
             <Nav className="ml-auto">
