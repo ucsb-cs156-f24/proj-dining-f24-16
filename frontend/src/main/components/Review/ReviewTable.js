@@ -1,4 +1,3 @@
-
 import React from "react";
 import OurTable, { ButtonColumn } from "main/components/OurTable";
 import { useBackendMutation } from "main/utils/useBackend";
@@ -112,7 +111,5 @@ export default function ReviewTable({
     );
   }
 
-  return (
-    <OurTable data={reviews} columns={columns} testid={"ReviewTable"} />
-  );
+  return <OurTable data={reviews} columns={columns} testid={"ReviewTable"} />;
 }

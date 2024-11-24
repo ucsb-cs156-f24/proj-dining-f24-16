@@ -30,7 +30,7 @@ describe("ReviewTable tests", () => {
             currentUser={currentUser}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const expectedHeaders = [
@@ -58,7 +58,7 @@ describe("ReviewTable tests", () => {
     const testId = "ReviewTable";
 
     expectedHeaders.forEach((headerText) => {
-      const header = screen.getByRole('columnheader', { name: headerText });
+      const header = screen.getByRole("columnheader", { name: headerText });
       expect(header).toBeInTheDocument();
     });
 
@@ -67,17 +67,27 @@ describe("ReviewTable tests", () => {
       expect(cell).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
 
     // Check that Approve, Reject, and Delete buttons are not present
-    const approveButton = screen.queryByTestId(`${testId}-cell-row-0-col-Approve-button`);
+    const approveButton = screen.queryByTestId(
+      `${testId}-cell-row-0-col-Approve-button`,
+    );
     expect(approveButton).not.toBeInTheDocument();
 
-    const rejectButton = screen.queryByTestId(`${testId}-cell-row-0-col-Reject-button`);
+    const rejectButton = screen.queryByTestId(
+      `${testId}-cell-row-0-col-Reject-button`,
+    );
     expect(rejectButton).not.toBeInTheDocument();
 
-    const deleteButton = screen.queryByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    const deleteButton = screen.queryByTestId(
+      `${testId}-cell-row-0-col-Delete-button`,
+    );
     expect(deleteButton).not.toBeInTheDocument();
   });
 
@@ -94,7 +104,7 @@ describe("ReviewTable tests", () => {
             deleteColumn={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     const expectedHeaders = [
@@ -125,7 +135,7 @@ describe("ReviewTable tests", () => {
     const testId = "ReviewTable";
 
     expectedHeaders.forEach((headerText) => {
-      const header = screen.getByRole('columnheader', { name: headerText });
+      const header = screen.getByRole("columnheader", { name: headerText });
       expect(header).toBeInTheDocument();
     });
 
@@ -134,19 +144,29 @@ describe("ReviewTable tests", () => {
       expect(cell).toBeInTheDocument();
     });
 
-    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent("1");
-    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent("2");
+    expect(screen.getByTestId(`${testId}-cell-row-0-col-id`)).toHaveTextContent(
+      "1",
+    );
+    expect(screen.getByTestId(`${testId}-cell-row-1-col-id`)).toHaveTextContent(
+      "2",
+    );
 
     // Check that Approve, Reject, and Delete buttons are present
-    const approveButton = screen.getByTestId(`${testId}-cell-row-0-col-Approve-button`);
+    const approveButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Approve-button`,
+    );
     expect(approveButton).toBeInTheDocument();
     expect(approveButton).toHaveClass("btn-success");
 
-    const rejectButton = screen.getByTestId(`${testId}-cell-row-0-col-Reject-button`);
+    const rejectButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Reject-button`,
+    );
     expect(rejectButton).toBeInTheDocument();
     expect(rejectButton).toHaveClass("btn-warning");
 
-    const deleteButton = screen.getByTestId(`${testId}-cell-row-0-col-Delete-button`);
+    const deleteButton = screen.getByTestId(
+      `${testId}-cell-row-0-col-Delete-button`,
+    );
     expect(deleteButton).toBeInTheDocument();
     expect(deleteButton).toHaveClass("btn-danger");
   });
@@ -155,7 +175,9 @@ describe("ReviewTable tests", () => {
     const currentUser = currentUserFixtures.adminUser;
 
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onPost("/api/review/approve/1").reply(200, { message: "Review approved" });
+    axiosMock
+      .onPost("/api/review/approve/1")
+      .reply(200, { message: "Review approved" });
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -166,14 +188,18 @@ describe("ReviewTable tests", () => {
             moderatorOptions={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId(`ReviewTable-cell-row-0-col-id`)).toHaveTextContent("1");
+      expect(
+        screen.getByTestId(`ReviewTable-cell-row-0-col-id`),
+      ).toHaveTextContent("1");
     });
 
-    const approveButton = screen.getByTestId(`ReviewTable-cell-row-0-col-Approve-button`);
+    const approveButton = screen.getByTestId(
+      `ReviewTable-cell-row-0-col-Approve-button`,
+    );
     expect(approveButton).toBeInTheDocument();
 
     fireEvent.click(approveButton);
@@ -186,7 +212,9 @@ describe("ReviewTable tests", () => {
     const currentUser = currentUserFixtures.adminUser;
 
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onPost("/api/review/reject/1").reply(200, { message: "Review rejected" });
+    axiosMock
+      .onPost("/api/review/reject/1")
+      .reply(200, { message: "Review rejected" });
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -197,14 +225,18 @@ describe("ReviewTable tests", () => {
             moderatorOptions={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId(`ReviewTable-cell-row-0-col-id`)).toHaveTextContent("1");
+      expect(
+        screen.getByTestId(`ReviewTable-cell-row-0-col-id`),
+      ).toHaveTextContent("1");
     });
 
-    const rejectButton = screen.getByTestId(`ReviewTable-cell-row-0-col-Reject-button`);
+    const rejectButton = screen.getByTestId(
+      `ReviewTable-cell-row-0-col-Reject-button`,
+    );
     expect(rejectButton).toBeInTheDocument();
 
     fireEvent.click(rejectButton);
@@ -217,7 +249,9 @@ describe("ReviewTable tests", () => {
     const currentUser = currentUserFixtures.adminUser;
 
     const axiosMock = new AxiosMockAdapter(axios);
-    axiosMock.onDelete("/api/review", { params: { id: 1 } }).reply(200, { message: "Review deleted" });
+    axiosMock
+      .onDelete("/api/review", { params: { id: 1 } })
+      .reply(200, { message: "Review deleted" });
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -228,14 +262,18 @@ describe("ReviewTable tests", () => {
             deleteColumn={true}
           />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId(`ReviewTable-cell-row-0-col-id`)).toHaveTextContent("1");
+      expect(
+        screen.getByTestId(`ReviewTable-cell-row-0-col-id`),
+      ).toHaveTextContent("1");
     });
 
-    const deleteButton = screen.getByTestId(`ReviewTable-cell-row-0-col-Delete-button`);
+    const deleteButton = screen.getByTestId(
+      `ReviewTable-cell-row-0-col-Delete-button`,
+    );
     expect(deleteButton).toBeInTheDocument();
 
     fireEvent.click(deleteButton);

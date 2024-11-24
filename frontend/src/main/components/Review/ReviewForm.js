@@ -4,11 +4,7 @@ import { Button, Form, Row, Col } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
-function ReviewForm({
-  initialContents,
-  submitAction,
-  buttonLabel = "Create",
-}) {
+function ReviewForm({ initialContents, submitAction, buttonLabel = "Create" }) {
   // Stryker disable all
   const {
     register,
@@ -188,7 +184,9 @@ function ReviewForm({
           <Row>
             <Col>
               <Form.Group className="mb-3">
-                <Form.Label htmlFor="moderatorComments">Moderator Comments</Form.Label>
+                <Form.Label htmlFor="moderatorComments">
+                  Moderator Comments
+                </Form.Label>
                 <Form.Control
                   data-testid="ReviewForm-moderatorComments"
                   id="moderatorComments"

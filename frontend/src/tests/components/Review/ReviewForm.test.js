@@ -17,7 +17,7 @@ describe("ReviewForm tests", () => {
     render(
       <Router>
         <ReviewForm />
-      </Router>
+      </Router>,
     );
     await screen.findByText(/Student ID/);
     await screen.findByText(/Create/);
@@ -27,19 +27,21 @@ describe("ReviewForm tests", () => {
     render(
       <Router>
         <ReviewForm initialContents={ReviewFixtures.oneReview} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ReviewForm-id");
     expect(screen.getByText(/Id/)).toBeInTheDocument();
     expect(screen.getByTestId("ReviewForm-id")).toHaveValue("1");
-    expect(screen.getByTestId("ReviewForm-status")).toHaveValue("Awaiting Moderation");
+    expect(screen.getByTestId("ReviewForm-status")).toHaveValue(
+      "Awaiting Moderation",
+    );
   });
 
   test("Correct error messages on bad input", async () => {
     render(
       <Router>
         <ReviewForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ReviewForm-studentId");
 
@@ -58,9 +60,15 @@ describe("ReviewForm tests", () => {
     fireEvent.click(submitButton);
 
     await screen.findByText(/Student ID must be a positive integer/);
-    expect(screen.getByText(/Item ID must be a positive integer/)).toBeInTheDocument();
-    expect(screen.getByText(/Date Item Served is required/)).toBeInTheDocument();
-    expect(screen.getByText(/Stars must be between 1 and 5/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Item ID must be a positive integer/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Date Item Served is required/),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Stars must be between 1 and 5/),
+    ).toBeInTheDocument();
     expect(screen.getByText(/Comments are required/)).toBeInTheDocument();
   });
 
@@ -70,7 +78,7 @@ describe("ReviewForm tests", () => {
     render(
       <Router>
         <ReviewForm submitAction={mockSubmitAction} />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ReviewForm-studentId");
 
@@ -92,10 +100,16 @@ describe("ReviewForm tests", () => {
 
     await waitFor(() => expect(mockSubmitAction).toHaveBeenCalled());
 
-    expect(screen.queryByText(/Student ID is required/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Student ID is required/),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText(/Item ID is required/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Date Item Served is required/)).not.toBeInTheDocument();
-    expect(screen.queryByText(/Stars must be between 1 and 5/)).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Date Item Served is required/),
+    ).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/Stars must be between 1 and 5/),
+    ).not.toBeInTheDocument();
     expect(screen.queryByText(/Comments are required/)).not.toBeInTheDocument();
   });
 
@@ -103,7 +117,7 @@ describe("ReviewForm tests", () => {
     render(
       <Router>
         <ReviewForm />
-      </Router>
+      </Router>,
     );
     await screen.findByTestId("ReviewForm-cancel");
     const cancelButton = screen.getByTestId("ReviewForm-cancel");
