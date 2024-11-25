@@ -5,7 +5,7 @@ import static org.springframework.test.web.client.match.MockRestRequestMatchers.
 import static org.springframework.test.web.client.match.MockRestRequestMatchers.requestTo;
 import static org.springframework.test.web.client.response.MockRestResponseCreators.withSuccess;
 
-import edu.ucsb.cs156.dining.entities.DiningCommons;
+import edu.ucsb.cs156.dining.models.DiningCommons;
 import edu.ucsb.cs156.dining.services.wiremock.WiremockService;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import java.util.ArrayList;

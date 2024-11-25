@@ -2,9 +2,8 @@ package edu.ucsb.cs156.dining.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ucsb.cs156.dining.entities.DiningCommons;
+import edu.ucsb.cs156.dining.models.DiningCommons;
 import edu.ucsb.cs156.dining.errors.EntityNotFoundException;
-import edu.ucsb.cs156.dining.repositories.DiningCommonsRepository;
 import edu.ucsb.cs156.dining.services.DiningCommonsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,21 +20,20 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
-@Tag(name = "API to handle CRUD operations for DiningCommons database")
-@RequestMapping("/api/diningcommons")
+@Tag(name = "API to handle get all dining commons from UCSB developer API website")
+@RequestMapping("/api/dining")
 @RestController
 public class DiningCommonsController extends ApiController /* implements ApplicationRunner */ {
-  @Autowired DiningCommonsRepository commonsRepository;
 
   @Autowired ObjectMapper mapper;
 
   @Autowired DiningCommonsService diningCommonsService;
 
-  // 
   @Operation(summary = "Get all Dining Commons")
   @GetMapping("/all")
-  public Iterable<DiningCommons> allCommons() {
-    Iterable<DiningCommons> commons = commonsRepository.findAll();
-    return commons;
+  public Iterable<DiningCommons> allDiningCommons() throws Exception {
+    Iterable<DiningCommons> diningCommons = diningCommonsService.get();
+    
+    return diningCommons;
   }
 }
