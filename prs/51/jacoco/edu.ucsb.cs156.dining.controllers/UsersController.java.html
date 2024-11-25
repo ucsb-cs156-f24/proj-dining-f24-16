@@ -111,11 +111,13 @@ import java.util.List;
 <span class="fc bfc" id="L111" title="All 2 branches covered.">        if (approved) {</span>
 <span class="fc" id="L112">            user.setAlias(user.getProposedAlias());  </span>
 <span class="fc" id="L113">            user.setProposedAlias(null);</span>
+        } else {
+<span class="fc" id="L115">            user.setProposedAlias(null);</span>
         }
         
-<span class="fc" id="L116">        userRepository.save(user);</span>
+<span class="fc" id="L118">        userRepository.save(user);</span>
 
-<span class="fc" id="L118">        return user;</span>
+<span class="fc" id="L120">        return user;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
