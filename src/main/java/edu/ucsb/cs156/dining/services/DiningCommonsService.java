@@ -3,8 +3,7 @@ package edu.ucsb.cs156.dining.services;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ucsb.cs156.dining.entities.DiningCommons;
-import edu.ucsb.cs156.dining.repositories.DiningCommonsRepository;
+import edu.ucsb.cs156.dining.models.DiningCommons;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +32,6 @@ import org.springframework.web.client.RestTemplate;
 public class DiningCommonsService {
 
   @Autowired private ObjectMapper mapper;
-  @Autowired private DiningCommonsRepository commonsRepository;
 
   @Value("${app.ucsb.api.consumer_key}")
   private String apiKey;
