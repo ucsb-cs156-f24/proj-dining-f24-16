@@ -2,9 +2,8 @@
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import edu.ucsb.cs156.dining.entities.DiningCommons;
+import edu.ucsb.cs156.dining.models.DiningCommons;
 import edu.ucsb.cs156.dining.errors.EntityNotFoundException;
-import edu.ucsb.cs156.dining.repositories.DiningCommonsRepository;
 import edu.ucsb.cs156.dining.services.DiningCommonsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -20,23 +19,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-<span class="fc" id="L23">@Slf4j</span>
-@Tag(name = &quot;API to handle CRUD operations for DiningCommons database&quot;)
-@RequestMapping(&quot;/api/diningcommons&quot;)
+<span class="fc" id="L22">@Slf4j</span>
+@Tag(name = &quot;API to handle get all dining commons from UCSB developer API website&quot;)
+@RequestMapping(&quot;/api/dining&quot;)
 @RestController
-<span class="fc" id="L27">public class DiningCommonsController extends ApiController /* implements ApplicationRunner */ {</span>
-  @Autowired DiningCommonsRepository commonsRepository;
+<span class="fc" id="L26">public class DiningCommonsController extends ApiController /* implements ApplicationRunner */ {</span>
 
   @Autowired ObjectMapper mapper;
 
   @Autowired DiningCommonsService diningCommonsService;
 
-  // 
   @Operation(summary = &quot;Get all Dining Commons&quot;)
   @GetMapping(&quot;/all&quot;)
-  public Iterable&lt;DiningCommons&gt; allCommons() {
-<span class="fc" id="L38">    Iterable&lt;DiningCommons&gt; commons = commonsRepository.findAll();</span>
-<span class="fc" id="L39">    return commons;</span>
+  public Iterable&lt;DiningCommons&gt; allDiningCommons() throws Exception {
+<span class="fc" id="L35">    Iterable&lt;DiningCommons&gt; diningCommons = diningCommonsService.get();</span>
+    
+<span class="fc" id="L37">    return diningCommons;</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
