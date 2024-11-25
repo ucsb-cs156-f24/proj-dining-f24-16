@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
   @Autowired DiningCommonsService diningCommonsService;
 
   @Operation(summary = &quot;Get all Dining Commons&quot;)
-  @GetMapping(&quot;/all&quot;)
+  @GetMapping(value = &quot;/all&quot;, produces = &quot;application/json&quot;)
   public Iterable&lt;DiningCommons&gt; allDiningCommons() throws Exception {
 <span class="fc" id="L35">    Iterable&lt;DiningCommons&gt; diningCommons = diningCommonsService.get();</span>
     
