@@ -22,7 +22,7 @@ import edu.ucsb.cs156.dining.errors.EntityNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
-
+import java.util.List;
 
 /**
  * This is a REST controller for getting information about the users.
@@ -56,6 +56,21 @@ import org.springframework.web.server.ResponseStatusException;
     }
 
     /**
+     * This method returns list of all users with a proposed alias.
+     * @return a list of users with a proposed alias
+     * @throws JsonProcessingException if there is an error processing the JSON
+     */
+    @Operation(summary = &quot;Get a list of all users with a proposed alias&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @GetMapping(&quot;/admin/usersWithProposedAlias&quot;)
+    public ResponseEntity&lt;String&gt; getUsersWithProposedAlias()
+            throws JsonProcessingException {
+<span class="fc" id="L68">        Iterable&lt;User&gt; users = userRepository.findByProposedAliasNotNull();</span>
+<span class="fc" id="L69">        String body = mapper.writeValueAsString(users);</span>
+<span class="fc" id="L70">        return ResponseEntity.ok().body(body);</span>
+    }
+
+    /**
      * This method allows the user to update their alias.
      * @param proposedAlias the new alias
      * @return the updated user
@@ -64,17 +79,17 @@ import org.springframework.web.server.ResponseStatusException;
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @PostMapping(&quot;/currentUser/updateAlias&quot;)
     public ResponseEntity&lt;User&gt; updateProposedAlias(@RequestParam String proposedAlias) {
-<span class="fc" id="L67">        CurrentUser currentUser = super.getCurrentUser();</span>
-<span class="fc" id="L68">        User user = currentUser.getUser();</span>
+<span class="fc" id="L82">        CurrentUser currentUser = super.getCurrentUser();</span>
+<span class="fc" id="L83">        User user = currentUser.getUser();</span>
     
-<span class="fc bfc" id="L70" title="All 2 branches covered.">        if (userRepository.findByAlias(proposedAlias).isPresent()) {</span>
-<span class="fc" id="L71">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Alias already in use.&quot;);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">        if (userRepository.findByAlias(proposedAlias).isPresent()) {</span>
+<span class="fc" id="L86">            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, &quot;Alias already in use.&quot;);</span>
         }
     
-<span class="fc" id="L74">        user.setProposedAlias(proposedAlias);</span>
-<span class="fc" id="L75">        User savedUser = userRepository.save(user);</span>
+<span class="fc" id="L89">        user.setProposedAlias(proposedAlias);</span>
+<span class="fc" id="L90">        User savedUser = userRepository.save(user);</span>
     
-<span class="fc" id="L77">        return ResponseEntity.ok(savedUser);</span>
+<span class="fc" id="L92">        return ResponseEntity.ok(savedUser);</span>
     }
     
     /**
@@ -89,18 +104,18 @@ import org.springframework.web.server.ResponseStatusException;
             @RequestParam long id, 
             @RequestParam Boolean approved) {
         
-<span class="fc" id="L92">        User user = userRepository.findById(id)</span>
-<span class="fc" id="L93">            .orElseThrow(() -&gt; new EntityNotFoundException(User.class, id));</span>
+<span class="fc" id="L107">        User user = userRepository.findById(id)</span>
+<span class="fc" id="L108">            .orElseThrow(() -&gt; new EntityNotFoundException(User.class, id));</span>
         
 
-<span class="fc bfc" id="L96" title="All 2 branches covered.">        if (approved) {</span>
-<span class="fc" id="L97">            user.setAlias(user.getProposedAlias());  </span>
-<span class="fc" id="L98">            user.setProposedAlias(null);</span>
+<span class="fc bfc" id="L111" title="All 2 branches covered.">        if (approved) {</span>
+<span class="fc" id="L112">            user.setAlias(user.getProposedAlias());  </span>
+<span class="fc" id="L113">            user.setProposedAlias(null);</span>
         }
         
-<span class="fc" id="L101">        userRepository.save(user);</span>
+<span class="fc" id="L116">        userRepository.save(user);</span>
 
-<span class="fc" id="L103">        return user;</span>
+<span class="fc" id="L118">        return user;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
