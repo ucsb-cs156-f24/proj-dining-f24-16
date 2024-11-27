@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CarrilloPage from "main/pages/DiningCommons/OrtegaPage";
+import OrtegaPage from "main/pages/DiningCommons/OrtegaPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,7 +7,6 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import OrtegaPage from "main/pages/DiningCommons/OrtegaPage";
 
 describe("OrtegaPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
