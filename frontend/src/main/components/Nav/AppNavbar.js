@@ -78,6 +78,9 @@ export default function AppNavbar({
                     <NavDropdown.Item as={Link} to="/diningcommons/ortega">
                       Ortega
                     </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to="/diningcommons/portola">
+                      Ortega
+                    </NavDropdown.Item>
                   </NavDropdown>
                   <Nav.Link as={Link} to="/restaurants">
                     Restaurants

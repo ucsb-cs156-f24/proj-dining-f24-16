@@ -27,6 +27,7 @@ import "bootstrap/dist/css/bootstrap.css";
 import "react-toastify/dist/ReactToastify.css";
 import DeLaGuerraPage from "main/pages/DiningCommons/DeLaGuerraPage";
 import OrtegaPage from "main/pages/DiningCommons/OrtegaPage";
+import PortolaPage from "main/pages/DiningCommons/PortolaPage";
 
 function App() {
   const { data: currentUser } = useCurrentUser();
@@ -59,7 +60,13 @@ function App() {
 
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route exact path="/diningcommons/delaguerra" element={<OrtegaPage />} />
+            <Route exact path="/diningcommons/ortega" element={<OrtegaPage />} />
+          </>
+        )}
+
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route exact path="/diningcommons/portola" element={<PortolaPage />} />
           </>
         )}
 
