@@ -33,7 +33,7 @@ describe("PortolaPage tests", () => {
         <MemoryRouter>
           <PortolaPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
