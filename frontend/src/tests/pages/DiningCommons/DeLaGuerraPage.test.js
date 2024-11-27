@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CarrilloPage from "main/pages/DiningCommons/DeLaGuerraPage";
+import DeLaGuerraPage from "main/pages/DiningCommons/DeLaGuerraPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { MemoryRouter } from "react-router-dom";
 
@@ -7,7 +7,6 @@ import { apiCurrentUserFixtures } from "fixtures/currentUserFixtures";
 import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
-import DeLaGuerraPage from "main/pages/DiningCommons/DeLaGuerraPage";
 
 describe("DeLaGuerraPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
@@ -34,10 +33,12 @@ describe("DeLaGuerraPage tests", () => {
         <MemoryRouter>
           <DeLaGuerraPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
-    await screen.findByText("Placeholder for Dining Commons Page for de la guerra");
+    await screen.findByText(
+      "Placeholder for Dining Commons Page for de la guerra",
+    );
   });
 });
