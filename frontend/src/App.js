@@ -48,25 +48,41 @@ function App() {
 
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route exact path="/diningcommons/carrillo" element={<CarrilloPage />} />
+            <Route
+              exact
+              path="/diningcommons/carrillo"
+              element={<CarrilloPage />}
+            />
           </>
         )}
 
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route exact path="/diningcommons/delaguerra" element={<DeLaGuerraPage />} />
+            <Route
+              exact
+              path="/diningcommons/delaguerra"
+              element={<DeLaGuerraPage />}
+            />
           </>
         )}
 
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route exact path="/diningcommons/ortega" element={<OrtegaPage />} />
+            <Route
+              exact
+              path="/diningcommons/ortega"
+              element={<OrtegaPage />}
+            />
           </>
         )}
 
         {hasRole(currentUser, "ROLE_USER") && (
           <>
-            <Route exact path="/diningcommons/portola" element={<PortolaPage />} />
+            <Route
+              exact
+              path="/diningcommons/portola"
+              element={<PortolaPage />}
+            />
           </>
         )}
 
