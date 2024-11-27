@@ -8,7 +8,6 @@ import { systemInfoFixtures } from "fixtures/systemInfoFixtures";
 import axios from "axios";
 import AxiosMockAdapter from "axios-mock-adapter";
 
-
 describe("DeLaGuerraPage tests", () => {
   const axiosMock = new AxiosMockAdapter(axios);
 
@@ -34,10 +33,12 @@ describe("DeLaGuerraPage tests", () => {
         <MemoryRouter>
           <DeLaGuerraPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
-    await screen.findByText("Placeholder for Dining Commons Page for de la guerra");
+    await screen.findByText(
+      "Placeholder for Dining Commons Page for de la guerra",
+    );
   });
 });
