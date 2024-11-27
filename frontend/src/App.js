@@ -15,6 +15,8 @@ import PlaceholderIndexPage from "main/pages/Placeholder/PlaceholderIndexPage";
 import PlaceholderCreatePage from "main/pages/Placeholder/PlaceholderCreatePage";
 import PlaceholderEditPage from "main/pages/Placeholder/PlaceholderEditPage";
 
+import CarrilloPage from "main/pages/DiningCommons/CarrilloPage";
+
 import MyReviewsIndexPage from "main/pages/MyReviews/MyReviewsIndexPage";
 
 import Moderate from "main/pages/Moderate";
@@ -38,6 +40,12 @@ function App() {
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route exact path="/ucsbdates" element={<UCSBDatesIndexPage />} />
+          </>
+        )}
+
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route exact path="/diningcommons/carrillo" element={<CarrilloPage />} />
           </>
         )}
 

@@ -43,10 +43,6 @@ export default function AppNavbar({
             )}
           </Nav>
 
-          <>
-            {/* be sure that each NavDropdown has a unique id and data-testid  */}
-          </>
-
           <Navbar.Collapse className="justify-content-between">
             <Nav className="mr-auto">
               {hasRole(currentUser, "ROLE_ADMIN") && (
@@ -67,6 +63,16 @@ export default function AppNavbar({
               )}
               {currentUser && currentUser.loggedIn ? (
                 <>
+                  {/* Dining Commons Dropdown */}
+                  <NavDropdown
+                    title="Dining Commons"
+                    id="appnavbar-diningcommons-dropdown"
+                    data-testid="appnavbar-diningcommons-dropdown"
+                  >
+                    <NavDropdown.Item as={Link} to="/diningcommons/carrillo">
+                      Carrillo
+                    </NavDropdown.Item>
+                  </NavDropdown>
                   <Nav.Link as={Link} to="/restaurants">
                     Restaurants
                   </Nav.Link>
