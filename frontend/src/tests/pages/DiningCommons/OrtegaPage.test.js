@@ -33,7 +33,7 @@ describe("OrtegaPage tests", () => {
         <MemoryRouter>
           <OrtegaPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert

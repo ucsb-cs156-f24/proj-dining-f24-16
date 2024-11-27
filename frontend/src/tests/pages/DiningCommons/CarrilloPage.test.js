@@ -33,7 +33,7 @@ describe("CarrilloPage tests", () => {
         <MemoryRouter>
           <CarrilloPage />
         </MemoryRouter>
-      </QueryClientProvider>
+      </QueryClientProvider>,
     );
 
     // assert
