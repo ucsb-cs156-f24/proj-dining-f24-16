@@ -124,5 +124,20 @@ import jakarta.validation.Valid;
 <span class="fc" id="L124">        reviewRepository.save(review);</span>
 <span class="fc" id="L125">        return review;</span>
     }
+
+    /**
+     * This method allows a user to get a list of reviews that they have previously made.
+     * Only user can only get a list of their own reviews, and you cant request another persons reviews
+     * @return a list of reviews sent by a given user
+     */
+    @Operation(summary = &quot;Get all reviews a user has sent: only callable by the user&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+    @GetMapping(&quot;/userReviews&quot;)
+    public Iterable&lt;Review&gt; get_all_review_by_user_id(){
+<span class="fc" id="L137">        CurrentUser user = getCurrentUser();</span>
+<span class="fc" id="L138">        long userId = user.getUser().getId();</span>
+<span class="fc" id="L139">        Iterable&lt;Review&gt; reviews = reviewRepository.findAllByStudentId(userId);</span>
+<span class="fc" id="L140">        return reviews;</span>
+    }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
