@@ -36,7 +36,6 @@ import jakarta.validation.Valid;
   @Autowired UCSBDiningMenuService ucsbDiningMenuService;
 
   @Operation(summary = &quot;Get list of meals serving in given dining common on given date&quot;)
-  @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
   @GetMapping(value = &quot;/{date-time}/{dining-commons-code}&quot;, produces = &quot;application/json&quot;)
   public ResponseEntity&lt;String&gt; menutimes(
       @Parameter(description= &quot;date (in iso format, e.g. YYYY-mm-dd) or date-time (in iso format e.g. YYYY-mm-ddTHH:MM:SS)&quot;) 
@@ -45,9 +44,9 @@ import jakarta.validation.Valid;
   )
     throws Exception {
 
-<span class="fc" id="L48">    String body = ucsbDiningMenuService.getJSON(datetime, diningcommoncode);</span>
+<span class="fc" id="L47">    String body = ucsbDiningMenuService.getJSON(datetime, diningcommoncode);</span>
 
-<span class="fc" id="L50">    return ResponseEntity.ok().body(body);</span>
+<span class="fc" id="L49">    return ResponseEntity.ok().body(body);</span>
   }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
