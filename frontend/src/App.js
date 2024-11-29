@@ -5,6 +5,10 @@ import AdminUsersPage from "main/pages/AdminUsersPage";
 
 import MyReviewsIndexPage from "main/pages/MyReviews/MyReviewsIndexPage";
 
+import MealTimesPage from "main/pages/Meal/MealTimesPage";
+
+import Moderate from "main/pages/Moderate";
+
 import { hasRole, useCurrentUser } from "main/utils/currentUser";
 
 import "bootstrap/dist/css/bootstrap.css";
@@ -24,6 +28,20 @@ function App() {
         {hasRole(currentUser, "ROLE_USER") && (
           <>
             <Route exact path="/myreviews" element={<MyReviewsIndexPage />} />
+          </>
+        )}
+
+        {hasRole(currentUser, "ROLE_ADMIN") && (
+          <Route exact path="/moderate" element={<Moderate />} />
+        )}
+
+        {hasRole(currentUser, "ROLE_USER") && (
+          <>
+            <Route
+              exact
+              path="/diningcommons/:date-time/:dining-commons-code"
+              element={<MealTimesPage />}
+            />
           </>
         )}
       </Routes>
