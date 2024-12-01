@@ -8,17 +8,7 @@ import { useBackendMutation } from "main/utils/useBackend";
 
 const ProfilePage = () => {
   const { data: currentUser } = useCurrentUser();
-  const { root } = currentUser || {};
-  const { user } = root || {};
-  const {
-    email,
-    pictureUrl,
-    fullName,
-    alias: initialAlias,
-    proposedAlias,
-    status,
-  } = user || {};
-
+ 
   const {
     register,
     formState: { errors },
@@ -32,14 +22,28 @@ const ProfilePage = () => {
       proposedAlias: user.proposedAlias,
     },
   });
+  
   const onSuccess = (user) => {
     toast(`Alias Awaiting Moderation: ${user.proposedAlias}`);
   };
 
   const mutation = useBackendMutation(objectToAxiosParams, { onSuccess });
+
   if (!currentUser?.loggedIn) {
     return <p>Not logged in.</p>;
   }
+
+  const { root } = currentUser;
+  const { user } = root;
+  const {
+    email,
+    pictureUrl,
+    fullName,
+    alias: initialAlias,
+    proposedAlias,
+    status,
+  } = user;
+
   const onSubmit = async (data) => {
     mutation.mutate({ proposedAlias: data.alias });
   };
