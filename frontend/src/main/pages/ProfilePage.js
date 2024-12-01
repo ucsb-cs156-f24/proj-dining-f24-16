@@ -5,6 +5,7 @@ import BasicLayout from "main/layouts/BasicLayout/BasicLayout";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
 import { useBackendMutation } from "main/utils/useBackend";
+import UsersTable from "main/components/Users/UsersTable";
 
 const ProfilePage = () => {
   const { data: currentUser } = useCurrentUser();
@@ -55,6 +56,7 @@ const ProfilePage = () => {
 
   return ( 
     <BasicLayout>
+      <UsersTable users={ [currentUser.root.user ] } />
       <Row className="align-items-center profile-header mb-5 text-center text-md-left">
         <Col md={2}>
           <img
@@ -65,8 +67,8 @@ const ProfilePage = () => {
         </Col>
         <Col md>
           <h2>{fullName}</h2>
-          <h3>{displayedAlias}</h3>
-          <h7>Proposed Alias: {displayedProposedAlias} {displayedStatus}</h7>
+          {/* <h3>{displayedAlias}</h3> */}
+          {/* <h7>Proposed Alias: {displayedProposedAlias} {displayedStatus}</h7> */}
           <p className="lead text-muted">{email}</p>
           <RoleBadge role={"ROLE_USER"} currentUser={currentUser} />
           <RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser} />
