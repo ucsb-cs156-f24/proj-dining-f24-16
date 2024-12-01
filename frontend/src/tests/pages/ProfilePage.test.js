@@ -16,6 +16,10 @@ jest.mock("react-toastify", () => ({
 describe("ProfilePage tests", () => {
   const queryClient = new QueryClient();
 
+  beforeEach(() => {
+    queryClient.clear();
+  });
+
   test("renders correctly for regular logged in user", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
