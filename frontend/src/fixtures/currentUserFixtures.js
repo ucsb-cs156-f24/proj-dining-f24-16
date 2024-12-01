@@ -13,6 +13,9 @@ const apiCurrentUserFixtures = {
       locale: "en",
       hostedDomain: "ucsb.edu",
       admin: true,
+      alias: null,
+      proposedAlias: null,
+      status: null,
     },
     roles: [
       {
@@ -61,6 +64,53 @@ const apiCurrentUserFixtures = {
       locale: "en",
       hostedDomain: null,
       admin: false,
+      alias: "ProposedAlias",
+      proposedAlias: "ProposedAlias",
+      status: "Approved"
+    },
+    roles: [
+      {
+        authority: "SCOPE_openid",
+      },
+      {
+        authority: "ROLE_USER",
+        attributes: {
+          sub: "102656447703889917227",
+          name: "Phillip Conrad",
+          given_name: "Phillip",
+          family_name: "Conrad",
+          picture:
+            "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
+          email: "pconrad.cis@gmail.com",
+          email_verified: true,
+          locale: "en",
+        },
+      },
+      {
+        authority: "SCOPE_https://www.googleapis.com/auth/userinfo.profile",
+      },
+      {
+        authority: "SCOPE_https://www.googleapis.com/auth/userinfo.email",
+      },
+    ],
+  },
+  userOnlyRejectedAlias: {
+    user: {
+      id: 2,
+      email: "pconrad.cis@gmail.com",
+      googleSub: "102656447703889917227",
+      pictureUrl:
+        "https://lh3.googleusercontent.com/a-/AOh14GhpDBUt8eCEqiRT45hrFbcimsX_h1ONn0dc3HV8Bp8=s96-c",
+      fullName: "Phillip Conrad",
+      givenName: "Phillip",
+      familyName: "Conrad",
+      emailVerified: true,
+      locale: "en",
+      hostedDomain: null,
+      admin: false,
+      alias: "OldAlias",
+      proposedAlias: "ProposedAlias",
+      status: "Rejected"
     },
     roles: [
       {

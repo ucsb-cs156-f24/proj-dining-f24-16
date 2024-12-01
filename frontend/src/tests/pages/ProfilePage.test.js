@@ -16,6 +16,10 @@ jest.mock("react-toastify", () => ({
 describe("ProfilePage tests", () => {
   const queryClient = new QueryClient();
 
+  beforeEach(()=>{
+    queryClient.clear();
+  });
+
   test("renders correctly for regular logged in user", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
     axiosMock
@@ -101,16 +105,12 @@ describe("ProfilePage tests", () => {
   test("displays initial alias correctly", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
 
-    axiosMock.onGet("/api/currentUser").reply(200, {
-      root: {
-        user: {
-          email: "phtcon@ucsb.edu",
-          fullName: "Phillip Conrad",
-          alias: "Anonymous User",
-          pictureUrl: "profile.jpg",
-        },
-      },
-    });
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.adminUser);
+    axiosMock
+      .onGet("/api/systemInfo")
+      .reply(200, systemInfoFixtures.showingNeither);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -120,7 +120,7 @@ describe("ProfilePage tests", () => {
       </QueryClientProvider>,
     );
 
-    await screen.findByText("Phillip Conrad");
+    await screen.findByText("Phill Conrad");
     expect(screen.getByText("Anonymous User")).toBeInTheDocument();
   });
 
@@ -171,18 +171,9 @@ describe("ProfilePage tests", () => {
   test("displays alias when approved", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
 
-    axiosMock.onGet("/api/currentUser").reply(200, {
-      root: {
-        user: {
-          email: "phtcon@ucsb.edu",
-          fullName: "Phillip Conrad",
-          alias: "NewAlias",
-          proposedAlias: "PropAlias",
-          status: "Approved",
-          pictureUrl: "profile.jpg",
-        },
-      },
-    });
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnly);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -193,10 +184,33 @@ describe("ProfilePage tests", () => {
     );
 
     await screen.findByText("Phillip Conrad");
-    expect(screen.getByText("NewAlias")).toBeInTheDocument();
+    expect(screen.getByText("ProposedAlias")).toBeInTheDocument();
 
     expect(
-      screen.getByText("Proposed Alias: NewAlias (Alias Approved. New alias now displayed.)"),
+      screen.getByText("Proposed Alias: ProposedAlias (Alias Approved. New alias now displayed.)"),
+    ).toBeInTheDocument();
+  });
+
+  test("displays alias when rejected", async () => {
+    const axiosMock = new AxiosMockAdapter(axios);
+
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnlyRejectedAlias);
+
+    render(
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <ProfilePage />
+        </MemoryRouter>
+      </QueryClientProvider>,
+    );
+
+    await screen.findByText("Phillip Conrad");
+    expect(screen.getByText("OldAlias")).toBeInTheDocument();
+
+    expect(
+      screen.getByText("Proposed Alias: ProposedAlias (Alias Rejected. Please try a different alias.)"),
     ).toBeInTheDocument();
   });
 });
