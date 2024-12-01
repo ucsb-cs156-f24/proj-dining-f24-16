@@ -24,7 +24,8 @@ const columns = [
   },
   {
     Header: "Alias",
-    accessor: "alias",
+    id: "alias",
+    accessor: (row) => (row.alias === null ? "Anonymous User" : row.alias),
   },
   {
     Header: "Proposed Alias",

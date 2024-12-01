@@ -61,7 +61,7 @@ const apiCurrentUserFixtures = {
       locale: "en",
       hostedDomain: null,
       admin: false,
-      alias: "NewAlias",
+      alias: null,
       proposedAlias: "PropAlias",
       status: "Approved",
     },

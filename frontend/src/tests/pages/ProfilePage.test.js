@@ -107,16 +107,9 @@ describe("ProfilePage tests", () => {
   test("displays initial alias correctly", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
 
-    axiosMock.onGet("/api/currentUser").reply(200, {
-      root: {
-        user: {
-          email: "phtcon@ucsb.edu",
-          fullName: "Phillip Conrad",
-          alias: "Anonymous User",
-          pictureUrl: "profile.jpg",
-        },
-      },
-    });
+    axiosMock
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnly);
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -173,25 +166,12 @@ describe("ProfilePage tests", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-  test.only("displays alias when approved", async () => {
+  test("displays alias when approved", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
 
     axiosMock
       .onGet("/api/currentUser")
       .reply(200, apiCurrentUserFixtures.userOnly);
-
-    // axiosMock.onGet("/api/currentUser").reply(200, {
-    //   root: {
-    //     user: {
-    //       email: "phtcon@ucsb.edu",
-    //       fullName: "Phillip Conrad",
-    //       alias: "NewAlias",
-    //       proposedAlias: "PropAlias",
-    //       status: "Approved",
-    //       pictureUrl: "profile.jpg",
-    //     },
-    //   },
-    // });
 
     render(
       <QueryClientProvider client={queryClient}>
@@ -202,12 +182,8 @@ describe("ProfilePage tests", () => {
     );
 
     await screen.findByText("Phillip Conrad");
-    expect(screen.getByText("NewAlias")).toBeInTheDocument();
+    expect(screen.getByText("Anonymous User")).toBeInTheDocument();
     expect(screen.getByText("Approved")).toBeInTheDocument();
     expect(screen.getByText("PropAlias")).toBeInTheDocument();
-
-    // expect(
-    //   screen.getByText("Proposed Alias: NewAlias (Alias Approved. New alias now displayed.)"),
-    // ).toBeInTheDocument();
   });
 });

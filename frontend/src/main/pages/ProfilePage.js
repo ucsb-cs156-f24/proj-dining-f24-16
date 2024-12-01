@@ -15,9 +15,9 @@ const ProfilePage = () => {
     email,
     pictureUrl,
     fullName,
-    alias: initialAlias,
-    proposedAlias,
-    status,
+    alias: _initialAlias,
+    _proposedAlias,
+    _status,
   } = user || {};
 
   const {
@@ -50,18 +50,6 @@ const ProfilePage = () => {
     window.location.reload();
   }
 
-  const displayedAlias = initialAlias || "Anonymous User";
-  const displayedProposedAlias = proposedAlias || "---";
-  const aliasTag =
-    status === "Approved"
-      ? " New alias now displayed."
-      : status === "Rejected"
-        ? " Please try a different alias."
-        : "";
-  const displayedStatus = status
-    ? "(Alias " + status + "." + aliasTag + ")"
-    : "";
-
   return (
     <BasicLayout>
       <UsersTable users={[currentUser.root.user]} />
@@ -75,8 +63,6 @@ const ProfilePage = () => {
         </Col>
         <Col md>
           <h2>{fullName}</h2>
-          {/* <h3>{displayedAlias}</h3> */}
-          {/* <h7>Proposed Alias: {displayedProposedAlias} {displayedStatus}</h7> */}
           <p className="lead text-muted">{email}</p>
           <RoleBadge role={"ROLE_USER"} currentUser={currentUser} />
           <RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser} />
