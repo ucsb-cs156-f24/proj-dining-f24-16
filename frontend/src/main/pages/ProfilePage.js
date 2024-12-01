@@ -29,7 +29,7 @@ const ProfilePage = () => {
 
   const mutation = useBackendMutation(objectToAxiosParams, { onSuccess });
 
-  if (!currentUser?.loggedIn) {
+  if (!currentUser.loggedIn) {
     return <p>Not logged in.</p>;
   }
 
