@@ -37,18 +37,17 @@ const ProfilePage = () => {
     toast(`Alias Awaiting Moderation: ${user.proposedAlias}`);
   };
 
-  const mutation = useBackendMutation(objectToAxiosParams, { onSuccess });
+  const mutation = useBackendMutation(
+    objectToAxiosParams,
+    { onSuccess },
+    "current user",
+  );
   if (!currentUser?.loggedIn) {
     return <p>Not logged in.</p>;
   }
   const onSubmit = async (data) => {
     mutation.mutate({ proposedAlias: data.alias });
   };
-
-  const { isSuccess } = mutation;
-  if (isSuccess) {
-    window.location.reload();
-  }
 
   return (
     <BasicLayout>
