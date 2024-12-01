@@ -16,7 +16,7 @@ jest.mock("react-toastify", () => ({
 describe("ProfilePage tests", () => {
   const queryClient = new QueryClient();
 
-  beforeEach(()=>{
+  beforeEach(() => {
     queryClient.clear();
   });
 
@@ -167,7 +167,6 @@ describe("ProfilePage tests", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-
   test("displays alias when approved", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
 
@@ -187,7 +186,9 @@ describe("ProfilePage tests", () => {
     expect(screen.getByText("ProposedAlias")).toBeInTheDocument();
 
     expect(
-      screen.getByText("Proposed Alias: ProposedAlias (Alias Approved. New alias now displayed.)"),
+      screen.getByText(
+        "Proposed Alias: ProposedAlias (Alias Approved. New alias now displayed.)",
+      ),
     ).toBeInTheDocument();
   });
 
@@ -210,7 +211,9 @@ describe("ProfilePage tests", () => {
     expect(screen.getByText("OldAlias")).toBeInTheDocument();
 
     expect(
-      screen.getByText("Proposed Alias: ProposedAlias (Alias Rejected. Please try a different alias.)"),
+      screen.getByText(
+        "Proposed Alias: ProposedAlias (Alias Rejected. Please try a different alias.)",
+      ),
     ).toBeInTheDocument();
   });
 });

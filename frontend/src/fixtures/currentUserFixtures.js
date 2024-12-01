@@ -66,7 +66,7 @@ const apiCurrentUserFixtures = {
       admin: false,
       alias: "ProposedAlias",
       proposedAlias: "ProposedAlias",
-      status: "Approved"
+      status: "Approved",
     },
     roles: [
       {
@@ -110,7 +110,7 @@ const apiCurrentUserFixtures = {
       admin: false,
       alias: "OldAlias",
       proposedAlias: "ProposedAlias",
-      status: "Rejected"
+      status: "Rejected",
     },
     roles: [
       {

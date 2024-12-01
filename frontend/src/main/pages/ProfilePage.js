@@ -10,7 +10,14 @@ const ProfilePage = () => {
   const { data: currentUser } = useCurrentUser();
   const { root } = currentUser || {};
   const { user } = root || {};
-  const { email, pictureUrl, fullName, alias: initialAlias, proposedAlias, status } = user || {};
+  const {
+    email,
+    pictureUrl,
+    fullName,
+    alias: initialAlias,
+    proposedAlias,
+    status,
+  } = user || {};
 
   const {
     register,
@@ -48,12 +55,13 @@ const ProfilePage = () => {
     status === "Approved"
       ? " New alias now displayed."
       : status === "Rejected"
-      ? " Please try a different alias."
-      : ""; 
-  const displayedStatus = status ? ("(Alias " + status + "." +aliasTag + ")") : "";
+        ? " Please try a different alias."
+        : "";
+  const displayedStatus = status
+    ? "(Alias " + status + "." + aliasTag + ")"
+    : "";
 
-
-  return ( 
+  return (
     <BasicLayout>
       <Row className="align-items-center profile-header mb-5 text-center text-md-left">
         <Col md={2}>
@@ -66,7 +74,9 @@ const ProfilePage = () => {
         <Col md>
           <h2>{fullName}</h2>
           <h3>{displayedAlias}</h3>
-          <h7>Proposed Alias: {displayedProposedAlias} {displayedStatus}</h7>
+          <h7>
+            Proposed Alias: {displayedProposedAlias} {displayedStatus}
+          </h7>
           <p className="lead text-muted">{email}</p>
           <RoleBadge role={"ROLE_USER"} currentUser={currentUser} />
           <RoleBadge role={"ROLE_MEMBER"} currentUser={currentUser} />
