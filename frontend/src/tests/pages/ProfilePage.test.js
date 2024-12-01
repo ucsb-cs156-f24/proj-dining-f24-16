@@ -38,7 +38,9 @@ describe("ProfilePage tests", () => {
     );
 
     await screen.findByText("Phillip Conrad");
-    expect(screen.getByText("Welcome, pconrad.cis@gmail.com")).toBeInTheDocument();
+    expect(
+      screen.getByText("Welcome, pconrad.cis@gmail.com"),
+    ).toBeInTheDocument();
   });
 
   test("renders correctly for admin user", async () => {
@@ -171,13 +173,12 @@ describe("ProfilePage tests", () => {
     expect(errorMessage).toBeInTheDocument();
   });
 
-
   test.only("displays alias when approved", async () => {
     const axiosMock = new AxiosMockAdapter(axios);
 
     axiosMock
-    .onGet("/api/currentUser")
-    .reply(200, apiCurrentUserFixtures.userOnly);
+      .onGet("/api/currentUser")
+      .reply(200, apiCurrentUserFixtures.userOnly);
 
     // axiosMock.onGet("/api/currentUser").reply(200, {
     //   root: {

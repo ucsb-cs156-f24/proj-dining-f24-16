@@ -11,7 +11,14 @@ const ProfilePage = () => {
   const { data: currentUser } = useCurrentUser();
   const { root } = currentUser || {};
   const { user } = root || {};
-  const { email, pictureUrl, fullName, alias: initialAlias, proposedAlias, status } = user || {};
+  const {
+    email,
+    pictureUrl,
+    fullName,
+    alias: initialAlias,
+    proposedAlias,
+    status,
+  } = user || {};
 
   const {
     register,
@@ -49,14 +56,15 @@ const ProfilePage = () => {
     status === "Approved"
       ? " New alias now displayed."
       : status === "Rejected"
-      ? " Please try a different alias."
-      : ""; 
-  const displayedStatus = status ? ("(Alias " + status + "." +aliasTag + ")") : "";
+        ? " Please try a different alias."
+        : "";
+  const displayedStatus = status
+    ? "(Alias " + status + "." + aliasTag + ")"
+    : "";
 
-
-  return ( 
+  return (
     <BasicLayout>
-      <UsersTable users={ [currentUser.root.user ] } />
+      <UsersTable users={[currentUser.root.user]} />
       <Row className="align-items-center profile-header mb-5 text-center text-md-left">
         <Col md={2}>
           <img
