@@ -8,7 +8,7 @@ import { useBackendMutation } from "main/utils/useBackend";
 
 const ProfilePage = () => {
   const { data: currentUser } = useCurrentUser();
- 
+
   const {
     register,
     formState: { errors },
@@ -22,7 +22,7 @@ const ProfilePage = () => {
       proposedAlias: user.proposedAlias,
     },
   });
-  
+
   const onSuccess = (user) => {
     toast(`Alias Awaiting Moderation: ${user.proposedAlias}`);
   };
