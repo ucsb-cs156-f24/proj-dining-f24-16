@@ -27,7 +27,12 @@ const ProfilePage = () => {
     toast(`Alias Awaiting Moderation: ${user.proposedAlias}`);
   };
 
-  const mutation = useBackendMutation(objectToAxiosParams, { onSuccess });
+  const mutation = useBackendMutation(
+    objectToAxiosParams,
+    { onSuccess },
+    // Stryker disable next-line StringLiteral : we don't try to test for query caching
+    "current user",
+  );
 
   if (!currentUser.loggedIn) {
     return <p>Not logged in.</p>;
@@ -47,11 +52,6 @@ const ProfilePage = () => {
   const onSubmit = async (data) => {
     mutation.mutate({ proposedAlias: data.alias });
   };
-
-  const { isSuccess } = mutation;
-  if (isSuccess) {
-    window.location.reload();
-  }
 
   const displayedAlias = initialAlias || "Anonymous User";
   const displayedProposedAlias = proposedAlias || "---";
