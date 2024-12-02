@@ -10,6 +10,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 /**
 * This is a JPA entity that represents a user.
 */
@@ -35,13 +37,14 @@ public class User {
  private boolean admin;
  private String alias;
  private String proposedAlias;
+ private String status;
+ private LocalDate dateApproved;
  
  public String getAlias() {
-<span class="fc bfc" id="L40" title="All 2 branches covered.">        if (this.alias == null) {</span>
-<span class="fc" id="L41">            this.alias = &quot;Anonymous User&quot;; </span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (this.alias == null) {</span>
+<span class="fc" id="L45">            this.alias = &quot;Anonymous User&quot;; </span>
         }
-<span class="fc" id="L43">        return this.alias;</span>
+<span class="fc" id="L47">        return this.alias;</span>
     }
-
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
